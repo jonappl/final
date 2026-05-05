@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>What Should I Eat?</title>
+ 
+</head>
+<body>
+
+<!-- STEP 1: Allergies -->
+<div id="step1">
+  <h2>Select Allergies</h2>
+  <label><input type="checkbox" value="dairy"> Dairy</label>
+  <label><input type="checkbox" value="gluten"> Gluten</label>
+  <label><input type="checkbox" value="peanuts"> Peanuts</label>
+  <br>
+  <button onclick="goToStep2()">Next</button>
+</div>
+
+<!-- STEP 2: Cuisine -->
+<div id="step2" class="hidden">
+  <h2>Select Cuisine</h2>
+  <label><input type="checkbox" value="Italian"> Italian</label>
+  <label><input type="checkbox" value="Mexican"> Mexican</label>
+  <label><input type="checkbox" value="Japanese"> Japanese</label>
+  <br>
+  <button onclick="goToStep3()">Start</button>
+</div>
+
+<!-- STEP 3: Randomizer -->
+<div id="step3" class="hidden">
+  <h2 id="foodName">Click below!</h2>
+  <p id="fact"></p>
+
+  <button onclick="pickFood()">What should I eat?</button>
+  <button onclick="toggleNutrition()">Show Nutrition</button>
+  <button onclick="toggleRecipe()">How to Make It</button>
+
+  <div id="nutrition" class="hidden"></div>
+  <div id="recipe" class="hidden"></div>
+</div>
+
+
+
+</body>
+</html>
