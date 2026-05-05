@@ -1,45 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>What Should I Eat?</title>
- 
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- STEP 1: Allergies -->
-<div id="step1">
-  <h2>Select Allergies</h2>
-  <label><input type="checkbox" value="dairy"> Dairy</label>
-  <label><input type="checkbox" value="gluten"> Gluten</label>
-  <label><input type="checkbox" value="peanuts"> Peanuts</label>
-  <br>
-  <button onclick="goToStep2()">Next</button>
+<div class="app">
+  <div class="progress">
+    <div class="prog-dot active" id="pd1"></div>
+    <div class="prog-dot" id="pd2"></div>
+    <div class="prog-dot" id="pd3"></div>
+    <span class="prog-label" id="prog-text">Allergies</span>
+  </div>
+
+  <!-- Step 1: Allergies -->
+  <div class="step active" id="step1">
+    <h2>Any allergies?</h2>
+    <p class="subtitle">We'll skip anything that doesn't work for you.</p>
+    <div class="chip-grid">
+      <div class="chip" data-val="dairy" onclick="toggleChip(this,'allergy')"><span class="chip-icon">🥛</span> Dairy</div>
+      <div class="chip" data-val="gluten" onclick="toggleChip(this,'allergy')"><span class="chip-icon">🌾</span> Gluten</div>
+      <div class="chip" data-val="peanuts" onclick="toggleChip(this,'allergy')"><span class="chip-icon">🥜</span> Peanuts</div>
+      <div class="chip" data-val="shellfish" onclick="toggleChip(this,'allergy')"><span class="chip-icon">🦐</span> Shellfish</div>
+      <div class="chip" data-val="eggs" onclick="toggleChip(this,'allergy')"><span class="chip-icon">🥚</span> Eggs</div>
+      <div class="chip" data-val="soy" onclick="toggleChip(this,'allergy')"><span class="chip-icon">🫘</span> Soy</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo(2)">Next →</button>
+      <button class="btn-ghost" onclick="skipAllergies()">No allergies</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Cuisine -->
+  <div class="step" id="step2">
+    <h2>What are you in the mood for?</h2>
+    <p class="subtitle">Pick one or more cuisines.</p>
+    <div class="chip-grid">
+      <div class="chip" data-val="Italian" onclick="toggleChip(this,'cuisine')"><span class="chip-icon">🍝</span> Italian</div>
+      <div class="chip" data-val="Mexican" onclick="toggleChip(this,'cuisine')"><span class="chip-icon">🌮</span> Mexican</div>
+      <div class="chip" data-val="Japanese" onclick="toggleChip(this,'cuisine')"><span class="chip-icon">🍱</span> Japanese</div>
+      <div class="chip" data-val="Indian" onclick="toggleChip(this,'cuisine')"><span class="chip-icon">🍛</span> Indian</div>
+      <div class="chip" data-val="Chinese" onclick="toggleChip(this,'cuisine')"><span class="chip-icon">🥢</span> Chinese</div>
+      <div class="chip" data-val="American" onclick="toggleChip(this,'cuisine')"><span class="chip-icon">🍔</span> American</div>
+      <div class="chip" data-val="Mediterranean" onclick="toggleChip(this,'cuisine')"><span class="chip-icon">🫒</span> Mediterranean</div>
+      <div class="chip" data-val="Thai" onclick="toggleChip(this,'cuisine')"><span class="chip-icon">🍜</span> Thai</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goTo(3)">Next →</button>
+      <button class="btn-ghost" onclick="goTo(1)">← Back</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Occasion -->
+  <div class="step" id="step3">
+    <h2>What's the occasion?</h2>
+    <p class="subtitle">Help us pick something that fits the moment.</p>
+    <div class="chip-grid">
+      <div class="chip" data-val="quick weeknight dinner" onclick="toggleChip(this,'vibe',true)"><span class="chip-icon">⚡</span> Quick dinner</div>
+      <div class="chip" data-val="meal prep for the week" onclick="toggleChip(this,'vibe',true)"><span class="chip-icon">📦</span> Meal prep</div>
+      <div class="chip" data-val="fancy date night" onclick="toggleChip(this,'vibe',true)"><span class="chip-icon">🕯</span> Date night</div>
+      <div class="chip" data-val="casual lunch" onclick="toggleChip(this,'vibe',true)"><span class="chip-icon">☀️</span> Casual lunch</div>
+      <div class="chip" data-val="comfort food" onclick="toggleChip(this,'vibe',true)"><span class="chip-icon">🛋</span> Comfort food</div>
+      <div class="chip" data-val="healthy and light" onclick="toggleChip(this,'vibe',true)"><span class="chip-icon">🥗</span> Healthy &amp; light</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary accent" onclick="getRecommendation()">Find my meal ✦</button>
+      <button class="btn-ghost" onclick="goTo(2)">← Back</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Result -->
+  <div class="step" id="step4">
+    <div class="loading-bar"><div class="loading-fill" id="lbar"></div></div>
+    <div id="result-area"></div>
+    <div class="action-row" id="action-row" style="display:none">
+      <button class="btn-primary accent" onclick="getRecommendation()">Try another ↺</button>
+      <button class="btn-ghost" onclick="goTo(1)">Start over</button>
+    </div>
+  </div>
 </div>
 
-<!-- STEP 2: Cuisine -->
-<div id="step2" class="hidden">
-  <h2>Select Cuisine</h2>
-  <label><input type="checkbox" value="Italian"> Italian</label>
-  <label><input type="checkbox" value="Mexican"> Mexican</label>
-  <label><input type="checkbox" value="Japanese"> Japanese</label>
-  <br>
-  <button onclick="goToStep3()">Start</button>
-</div>
-
-<!-- STEP 3: Randomizer -->
-<div id="step3" class="hidden">
-  <h2 id="foodName">Click below!</h2>
-  <p id="fact"></p>
-
-  <button onclick="pickFood()">What should I eat?</button>
-  <button onclick="toggleNutrition()">Show Nutrition</button>
-  <button onclick="toggleRecipe()">How to Make It</button>
-
-  <div id="nutrition" class="hidden"></div>
-  <div id="recipe" class="hidden"></div>
-</div>
-
-
-
+<script src="script.js"></script>
 </body>
 </html>
