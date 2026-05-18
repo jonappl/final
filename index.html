@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<!-- This tells the browser "hey, this is a modern HTML5 page" -->
 <html lang="en">
 <head>
-  <!-- UTF-8 means the page can handle special characters, emojis, etc. -->
+  <!-- UTF-8 means the page can handle special characters -->
   <meta charset="UTF-8" />
 
-  <!-- This makes the page look good on phones — without it, mobile would zoom out and make everything tiny -->
+  <!-- This makes the page look good on phones -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>SafePlate Recipe Finder</title>
@@ -17,20 +16,18 @@
   <!-- This actually loads the Inter font from Google in a few different weights (boldness levels) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- This pulls in all our CSS styling from the separate style.css file -->
+  <!-- This pulls in all CSS styling from the separate style.css file -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- =============================================
-       HEADER — the sticky bar at the top of the page
-       "sticky" means it stays visible as you scroll down
-  ============================================== -->
+  <!-- the sticky bar at the top of the page means it stays visible as you scroll down
+   -->
   <header>
     <div class="wrap topbar">
 
-      <!-- The logo: just an emoji icon + the site name side by side -->
+      <!-- just an emoji icon + the site name side by side -->
       <div class="logo">
         <div class="logo-icon">🍽️</div>
         <span>SafePlate</span>
@@ -54,15 +51,15 @@
 
 
   <!-- =============================================
-       MAIN CONTENT — all the page sections live here
-       Only one section is visible at a time (controlled by JS)
+       all the page sections live here
+       Only one section is visible at a time
   ============================================== -->
   <main class="wrap">
 
 
     <!-- =============================================
-         HOME SECTION — the landing page / welcome screen
-         Has the hero intro, three info cards, and the image slider
+         welcome screen
+         Has the intro, three info cards, and the image slider
     ============================================== -->
     <section id="home" class="section active">
       <!-- "active" class is what makes this section visible by default -->
