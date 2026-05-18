@@ -164,7 +164,6 @@ window.addEventListener("DOMContentLoaded", () => {
       notes: "Naturally free from the major listed allergens if your turkey and rice are plain. Check seasoning labels."
     },
 
-
         {
           id: 3,
           name: "Coconut Chickpea Curry",
