@@ -1,21 +1,43 @@
 <!DOCTYPE html>
+<!-- This tells the browser "hey, this is a modern HTML5 page" -->
 <html lang="en">
 <head>
+  <!-- UTF-8 means the page can handle special characters, emojis, etc. -->
   <meta charset="UTF-8" />
+
+  <!-- This makes the page look good on phones — without it, mobile would zoom out and make everything tiny -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>SafePlate Recipe Finder</title>
+
+  <!-- These two lines tell the browser to connect to Google Fonts early so the font loads faster -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- This actually loads the Inter font from Google in a few different weights (boldness levels) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- This pulls in all our CSS styling from the separate style.css file -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
+  <!-- =============================================
+       HEADER — the sticky bar at the top of the page
+       "sticky" means it stays visible as you scroll down
+  ============================================== -->
   <header>
     <div class="wrap topbar">
+
+      <!-- The logo: just an emoji icon + the site name side by side -->
       <div class="logo">
         <div class="logo-icon">🍽️</div>
         <span>SafePlate</span>
       </div>
+
+      <!-- Navigation buttons — each one has a data-section attribute.
+           JavaScript reads that attribute to know which section to show when clicked -->
       <nav aria-label="Main navigation">
         <button class="nav-btn active" data-section="home">Home</button>
         <button class="nav-btn" data-section="finder">Recipe Finder</button>
@@ -23,27 +45,54 @@
         <button class="nav-btn" data-section="tools">Tools</button>
         <button class="nav-btn" data-section="about">About</button>
       </nav>
+
+      <!-- Dark mode toggle — JS will flip the "dark" class on <body> when this is clicked -->
       <button id="themeBtn" class="btn secondary small-btn">Dark Mode</button>
+
     </div>
   </header>
 
+
+  <!-- =============================================
+       MAIN CONTENT — all the page sections live here
+       Only one section is visible at a time (controlled by JS)
+  ============================================== -->
   <main class="wrap">
+
+
+    <!-- =============================================
+         HOME SECTION — the landing page / welcome screen
+         Has the hero intro, three info cards, and the image slider
+    ============================================== -->
     <section id="home" class="section active">
+      <!-- "active" class is what makes this section visible by default -->
+
+      <!-- Hero: the big intro area split into text on the left, featured recipe card on the right -->
       <div class="hero">
+
+        <!-- Left side: headline, description, safety warning, and action buttons -->
         <div>
           <span class="badge">Allergy-aware meal discovery</span>
           <h1>Find meals that fit real food needs.</h1>
           <p>
             SafePlate is a live recipe finder with filters for major allergens, extra ingredient avoids, diets, cuisines, meal types, cooking time, difficulty, and random meal ideas. Every recipe includes an image, ingredients, clear steps, and safety notes.
           </p>
+
+          <!-- Safety disclaimer so people know this isn't medical advice -->
           <div class="notice">
             <strong>Safety note:</strong> This site is a planning tool, not medical advice. Always check ingredient labels, restaurant cross-contact risks, and medical guidance for severe allergies.
           </div>
+
           <div class="hero-actions">
+            <!-- This button navigates to the finder section (JS picks up the data-section) -->
             <button class="btn" data-section="finder">Start Filtering</button>
+
+            <!-- This button picks a random recipe and shows it in the hero card on the right -->
             <button class="btn warn" id="surpriseHomeBtn">Random Safe Meal</button>
           </div>
         </div>
+
+        <!-- Right side: a featured recipe card — JS swaps the image/text when Random is clicked -->
         <div class="hero-card">
           <img id="heroRecipeImg" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1000&q=80" alt="Fresh meal bowl">
           <div class="hero-card-body">
@@ -51,8 +100,11 @@
             <p class="small" id="heroRecipeText">A flexible, colorful meal that can work for many allergy-aware diets.</p>
           </div>
         </div>
-      </div>
 
+      </div><!-- end .hero -->
+
+
+      <!-- Three info cards: Purpose, Audience, How it works -->
       <div class="grid three">
         <div class="card panel">
           <h3>Purpose</h3>
@@ -68,12 +120,15 @@
         </div>
       </div>
 
+
+      <!-- Image slider — JS cycles through the first 6 recipes when prev/next are clicked -->
       <div class="section-title">
         <h2>Featured meal gallery</h2>
         <p>Use the slider to preview recipe styles.</p>
       </div>
       <div class="card panel">
         <div class="slider">
+          <!-- JS fills in the src and alt on page load, then swaps them on each slide change -->
           <img id="slideImg" class="slide-img" src="" alt="Recipe preview">
           <div class="slide-caption">
             <h3 id="slideTitle">Recipe</h3>
@@ -85,9 +140,16 @@
           <button id="nextSlide" class="btn secondary">Next</button>
         </div>
       </div>
-    </section>
 
+    </section><!-- end #home -->
+
+
+    <!-- =============================================
+         FINDER SECTION — the main recipe search + filter page
+         Left side: filter panel. Right side: recipe grid results.
+    ============================================== -->
     <section id="finder" class="section">
+
       <div class="section-title">
         <h2>Recipe Finder</h2>
         <p>Filter by allergy, food type, cuisine, diet, cooking time, difficulty, and custom avoided ingredients.</p>
@@ -97,31 +159,44 @@
         The built-in allergy filters include the major common allergens plus extra avoid categories. For anything else, use the custom avoid box. Separate custom items with commas.
       </div>
 
+      <!-- Two-column layout: filter sidebar on left, results on right -->
       <div class="grid two">
+
+        <!-- ---- FILTER SIDEBAR ---- -->
         <aside class="card panel filter-panel">
+          <!-- These two buttons toggle the filter panel visibility and reset all filters -->
           <div class="actions">
             <button id="toggleFiltersBtn" class="btn secondary full">Hide Filters</button>
             <button id="resetFiltersBtn" class="btn danger full">Reset</button>
           </div>
 
+          <!-- All the filter controls live inside this div so we can hide/show them as a group -->
           <div id="filtersBody">
+
+            <!-- Text search: JS checks if the typed word appears in the recipe name or ingredients -->
             <div class="filter-group">
               <label class="label" for="searchInput">Search foods</label>
               <input id="searchInput" class="field" type="search" placeholder="Search name or ingredient">
             </div>
 
+            <!-- Allergy checkboxes — this container is empty at first.
+                 JS builds the checkboxes dynamically from the allergyOptions array in script.js -->
             <div class="filter-group">
               <h3>Allergies and avoids</h3>
               <div class="checks" id="allergyChecks"></div>
+              <!-- JS will inject checkboxes here on page load -->
             </div>
 
+            <!-- Free-text avoid field for anything not in the checkbox list above -->
             <div class="filter-group">
               <label class="label" for="customAvoidInput">Custom avoid list</label>
               <input id="customAvoidInput" class="field" type="text" placeholder="ex: avocado, garlic, banana">
               <p class="small">Use this for any allergy or ingredient not listed above.</p>
             </div>
 
+            <!-- Dropdown filters: diet, meal type, cuisine, max cooking time, difficulty, sort order -->
             <div class="filter-group form-grid">
+
               <div>
                 <label class="label" for="dietSelect">Diet</label>
                 <select id="dietSelect" class="field">
@@ -165,6 +240,7 @@
                 </select>
               </div>
 
+              <!-- Max time uses 999 as "any" so the filter never excludes anything by default -->
               <div>
                 <label class="label" for="timeSelect">Max time</label>
                 <select id="timeSelect" class="field">
@@ -195,52 +271,92 @@
                   <option value="calories">Lowest calories</option>
                 </select>
               </div>
-            </div>
-          </div>
-        </aside>
 
+            </div>
+          </div><!-- end #filtersBody -->
+
+        </aside><!-- end filter sidebar -->
+
+
+        <!-- ---- RESULTS AREA ---- -->
         <section>
+
+          <!-- Toolbar: shows how many recipes matched + two action buttons -->
           <div class="recipe-toolbar">
+            <!-- JS updates this text every time the filters change -->
             <p class="recipe-count" id="resultCount">0 recipes found</p>
             <div class="actions">
+              <!-- Picks a random recipe from whatever results are currently showing -->
               <button id="randomBtn" class="btn warn">Random from Results</button>
+              <!-- Grabs one breakfast, lunch, and dinner from results and sends them to the Tools section -->
               <button id="mealPlanBtn" class="btn secondary">Build 3-Meal Plan</button>
             </div>
           </div>
+
+          <!-- Active filter tags — JS renders little pills here showing what filters are on -->
           <div id="activeFilterTags" class="tag-row" style="margin-bottom:1rem"></div>
+
+          <!-- The recipe cards grid — JS builds all the cards and injects them here -->
           <div id="recipeGrid" class="recipe-grid"></div>
+
+          <!-- Empty state message — JS shows this if no recipes match the filters -->
           <div id="emptyState" class="empty hidden">
             No recipes match those filters. Remove one allergy/avoid filter, increase time, or use the custom box for more specific filtering.
           </div>
-        </section>
-      </div>
-    </section>
 
+        </section><!-- end results area -->
+
+      </div><!-- end .grid.two -->
+
+    </section><!-- end #finder -->
+
+
+    <!-- =============================================
+         SAVED SECTION — recipes the user has bookmarked this session
+         Note: saved recipes are stored in a JS array, so they reset on page refresh
+    ============================================== -->
     <section id="saved" class="section">
+
       <div class="section-title">
         <h2>Saved Recipes</h2>
         <p>Recipes you save during this session appear here.</p>
       </div>
+
+      <!-- Clears the entire saved list -->
       <div class="actions" style="margin-bottom:1rem">
         <button id="clearSavedBtn" class="btn danger">Clear Saved</button>
       </div>
-      <div id="savedGrid" class="saved-grid"></div>
-      <div id="savedEmpty" class="empty">No saved recipes yet. Open a recipe and press Save.</div>
-    </section>
 
+      <!-- JS injects saved recipe mini-cards here -->
+      <div id="savedGrid" class="saved-grid"></div>
+
+      <!-- Shown when savedRecipes array is empty -->
+      <div id="savedEmpty" class="empty">No saved recipes yet. Open a recipe and press Save.</div>
+
+    </section><!-- end #saved -->
+
+
+    <!-- =============================================
+         TOOLS SECTION — calorie estimator, food profile form, and the 3-meal plan output
+    ============================================== -->
     <section id="tools" class="section">
+
       <div class="section-title">
         <h2>Meal Tools</h2>
         <p>Small interactive tools for planning meals.</p>
       </div>
 
       <div class="grid two">
+
+        <!-- Tool 1: Quick calorie estimate
+             User picks a meal size preset, JS multiplies by portion count and shows the total -->
         <div class="card tool-card">
           <h3>Quick calorie estimate</h3>
           <p class="small">Enter ingredients or portions to get a simple estimated total. This is approximate.</p>
           <div class="form-grid" style="margin-top:1rem">
             <input id="calorieName" class="field" type="text" placeholder="Food name, ex: rice bowl">
             <input id="calorieAmount" class="field" type="number" min="1" placeholder="Number of portions">
+            <!-- Each option's value is the base calorie count JS will multiply -->
             <select id="calorieType" class="field">
               <option value="350">Light meal / 350 cal</option>
               <option value="550">Regular meal / 550 cal</option>
@@ -249,9 +365,12 @@
             </select>
             <button id="calcCaloriesBtn" class="btn">Calculate</button>
           </div>
+          <!-- JS writes the result text into this div and removes the "hidden" class -->
           <div id="calorieResult" class="macro-result hidden"></div>
         </div>
 
+        <!-- Tool 2: Food profile form
+             User fills it out, JS summarizes their preferences as a short paragraph -->
         <div class="card tool-card">
           <h3>Food profile form</h3>
           <p class="small">Submit a food preference profile and the site will summarize it dynamically.</p>
@@ -266,23 +385,37 @@
             <input id="profileAvoid" class="field" type="text" placeholder="Avoids, ex: milk, peanut">
             <button class="btn" type="submit">Create Profile</button>
           </form>
+          <!-- JS writes the summary paragraph here after the form is submitted -->
           <div id="profileResult" class="profile-result hidden"></div>
         </div>
-      </div>
 
+      </div><!-- end .grid.two -->
+
+
+      <!-- 3-meal plan output — JS fills this in when "Build 3-Meal Plan" is clicked in Finder -->
       <div class="section-title">
         <h2>Generated 3-meal plan</h2>
         <p>Uses your current filters from the finder.</p>
       </div>
+      <!-- JS injects breakfast/lunch/dinner cards here -->
       <div id="mealPlanGrid" class="plan-grid"></div>
+      <!-- Shown until the user actually generates a plan -->
       <div id="mealPlanEmpty" class="empty">Press "Build 3-Meal Plan" in the Recipe Finder.</div>
-    </section>
 
+    </section><!-- end #tools -->
+
+
+    <!-- =============================================
+         ABOUT SECTION — info about the project + commit history
+    ============================================== -->
     <section id="about" class="section">
+
       <div class="section-title">
         <h2>About SafePlate</h2>
         <p>Clear purpose, audience, and safety limits.</p>
       </div>
+
+      <!-- Three cards explaining what the app is, who it's for, and its limits -->
       <div class="grid three">
         <div class="card panel">
           <h3>Clear purpose</h3>
@@ -297,6 +430,8 @@
           <p class="small">The app avoids recipes based on listed ingredient data, but it cannot verify packaged labels or cross-contact.</p>
         </div>
       </div>
+
+      <!-- Commit history cards — just static text showing the build stages -->
       <div class="section-title">
         <h2>Meaningful commit history</h2>
       </div>
@@ -307,45 +442,79 @@
         <div class="mini-card card"><h3>Commit 4</h3><p>Add recipe detail modal, saved recipes, random meal button, and meal planner.</p></div>
         <div class="mini-card card"><h3>Commit 5</h3><p>Add theme toggle, gallery slider, interactive forms, and responsive design polish.</p></div>
       </div>
-    </section>
-  </main>
 
+    </section><!-- end #about -->
+
+
+  </main><!-- end main -->
+
+
+  <!-- =============================================
+       RECIPE MODAL — the popup that appears when you click "View Recipe"
+       It's hidden by default (class="hidden") and JS removes that class to show it
+  ============================================== -->
   <div id="recipeModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal">
+
+      <!-- Two-column layout inside the modal: image on left, details on right -->
       <div class="modal-hero">
+
+        <!-- JS sets this image src dynamically when a recipe is opened -->
         <img id="modalImg" src="" alt="Recipe image">
+
         <div class="modal-content">
+
+          <!-- Top row: cuisine/meal badge on left, close button on right -->
           <div class="close-row">
             <span id="modalSafeTag" class="badge">Recipe</span>
+            <!-- Clicking this adds the "hidden" class back to hide the modal -->
             <button id="closeModalBtn" class="btn secondary small-btn">Close</button>
           </div>
+
+          <!-- JS fills in the recipe name, description, and metadata pills -->
           <h2 id="modalTitle">Recipe title</h2>
           <p id="modalDesc" class="small"></p>
           <div id="modalMeta" class="tag-row" style="margin:1rem 0"></div>
+
           <div class="actions">
+            <!-- Adds the current recipe to the savedRecipes array and updates the Saved section -->
             <button id="saveRecipeBtn" class="btn">Save Recipe</button>
+            <!-- Just calls window.print() — uses the browser's built-in print dialog -->
             <button id="printRecipeBtn" class="btn secondary">Print</button>
           </div>
+
+          <!-- Side-by-side boxes: ingredients list and cooking steps -->
           <div class="detail-cols">
             <div class="detail-box">
               <h3>Ingredients</h3>
+              <!-- JS injects <li> items here from the recipe's ingredients array -->
               <ul id="modalIngredients"></ul>
             </div>
             <div class="detail-box">
               <h3>Steps</h3>
+              <!-- JS injects <li> items here from the recipe's steps array -->
               <ol id="modalSteps"></ol>
             </div>
           </div>
+
+          <!-- Allergy notes box at the bottom of the modal -->
           <div class="detail-box" style="margin-top:1rem">
             <h3>Allergy and substitution notes</h3>
+            <!-- JS fills in the recipe's notes text -->
             <p id="modalNotes" class="small"></p>
+            <!-- JS renders allergen warning pills here, or a "no allergens" pill if the list is empty -->
             <div id="modalAllergens" class="tag-row" style="margin-top:.8rem"></div>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
+        </div><!-- end .modal-content -->
+      </div><!-- end .modal-hero -->
+    </div><!-- end .modal -->
+  </div><!-- end #recipeModal -->
+
+
+  <!-- =============================================
+       FOOTER — simple static footer at the bottom
+  ============================================== -->
   <footer>
     <div class="wrap">
       <p class="strong">SafePlate Recipe Finder</p>
@@ -353,6 +522,9 @@
     </div>
   </footer>
 
+
+  <!-- Load the JavaScript last so the HTML above is already in the page before JS tries to find elements -->
   <script src="script.js"></script>
+
 </body>
 </html>
