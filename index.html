@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafePlate Recipe Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="wrap topbar">
+      <div class="logo">
+        <div class="logo-icon">🍽️</div>
+        <span>SafePlate</span>
+      </div>
+      <nav aria-label="Main navigation">
+        <button class="nav-btn active" data-section="home">Home</button>
+        <button class="nav-btn" data-section="finder">Recipe Finder</button>
+        <button class="nav-btn" data-section="saved">Saved</button>
+        <button class="nav-btn" data-section="tools">Tools</button>
+        <button class="nav-btn" data-section="about">About</button>
+      </nav>
+      <button id="themeBtn" class="btn secondary small-btn">Dark Mode</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="home" class="section active">
+      <div class="hero">
+        <div>
+          <span class="badge">Allergy-aware meal discovery</span>
+          <h1>Find meals that fit real food needs.</h1>
+          <p>
+            SafePlate is a live recipe finder with filters for major allergens, extra ingredient avoids, diets, cuisines, meal types, cooking time, difficulty, and random meal ideas. Every recipe includes an image, ingredients, clear steps, and safety notes.
+          </p>
+          <div class="notice">
+            <strong>Safety note:</strong> This site is a planning tool, not medical advice. Always check ingredient labels, restaurant cross-contact risks, and medical guidance for severe allergies.
+          </div>
+          <div class="hero-actions">
+            <button class="btn" data-section="finder">Start Filtering</button>
+            <button class="btn warn" id="surpriseHomeBtn">Random Safe Meal</button>
+          </div>
+        </div>
+        <div class="hero-card">
+          <img id="heroRecipeImg" src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1000&q=80" alt="Fresh meal bowl">
+          <div class="hero-card-body">
+            <p class="small strong" id="heroRecipeName">Featured: Rainbow Quinoa Bowl</p>
+            <p class="small" id="heroRecipeText">A flexible, colorful meal that can work for many allergy-aware diets.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid three">
+        <div class="card panel">
+          <h3>Purpose</h3>
+          <p class="small">Help people quickly find meals that match allergy limits, diet choices, cooking style, and available time.</p>
+        </div>
+        <div class="card panel">
+          <h3>Audience</h3>
+          <p class="small">Students, families, home cooks, and anyone who needs organized allergy-aware meal ideas.</p>
+        </div>
+        <div class="card panel">
+          <h3>How it works</h3>
+          <p class="small">Pick foods to avoid, select a cuisine or diet, then open any recipe for ingredients and steps.</p>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <h2>Featured meal gallery</h2>
+        <p>Use the slider to preview recipe styles.</p>
+      </div>
+      <div class="card panel">
+        <div class="slider">
+          <img id="slideImg" class="slide-img" src="" alt="Recipe preview">
+          <div class="slide-caption">
+            <h3 id="slideTitle">Recipe</h3>
+            <p id="slideText">Preview text</p>
+          </div>
+        </div>
+        <div class="slide-controls">
+          <button id="prevSlide" class="btn secondary">Previous</button>
+          <button id="nextSlide" class="btn secondary">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="finder" class="section">
+      <div class="section-title">
+        <h2>Recipe Finder</h2>
+        <p>Filter by allergy, food type, cuisine, diet, cooking time, difficulty, and custom avoided ingredients.</p>
+      </div>
+
+      <div class="notice">
+        The built-in allergy filters include the major common allergens plus extra avoid categories. For anything else, use the custom avoid box. Separate custom items with commas.
+      </div>
+
+      <div class="grid two">
+        <aside class="card panel filter-panel">
+          <div class="actions">
+            <button id="toggleFiltersBtn" class="btn secondary full">Hide Filters</button>
+            <button id="resetFiltersBtn" class="btn danger full">Reset</button>
+          </div>
+
+          <div id="filtersBody">
+            <div class="filter-group">
+              <label class="label" for="searchInput">Search foods</label>
+              <input id="searchInput" class="field" type="search" placeholder="Search name or ingredient">
+            </div>
+
+            <div class="filter-group">
+              <h3>Allergies and avoids</h3>
+              <div class="checks" id="allergyChecks"></div>
+            </div>
+
+            <div class="filter-group">
+              <label class="label" for="customAvoidInput">Custom avoid list</label>
+              <input id="customAvoidInput" class="field" type="text" placeholder="ex: avocado, garlic, banana">
+              <p class="small">Use this for any allergy or ingredient not listed above.</p>
+            </div>
+
+            <div class="filter-group form-grid">
+              <div>
+                <label class="label" for="dietSelect">Diet</label>
+                <select id="dietSelect" class="field">
+                  <option value="any">Any diet</option>
+                  <option value="vegan">Vegan</option>
+                  <option value="vegetarian">Vegetarian</option>
+                  <option value="pescatarian">Pescatarian</option>
+                  <option value="high-protein">High protein</option>
+                  <option value="low-carb">Low carb</option>
+                  <option value="gluten-free">Gluten free</option>
+                  <option value="dairy-free">Dairy free</option>
+                  <option value="nut-free">Nut free</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="label" for="mealSelect">Meal type</label>
+                <select id="mealSelect" class="field">
+                  <option value="any">Any meal</option>
+                  <option value="breakfast">Breakfast</option>
+                  <option value="lunch">Lunch</option>
+                  <option value="dinner">Dinner</option>
+                  <option value="snack">Snack</option>
+                  <option value="dessert">Dessert</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="label" for="cuisineSelect">Cuisine</label>
+                <select id="cuisineSelect" class="field">
+                  <option value="any">Any cuisine</option>
+                  <option value="American">American</option>
+                  <option value="Mediterranean">Mediterranean</option>
+                  <option value="Mexican">Mexican</option>
+                  <option value="Japanese">Japanese</option>
+                  <option value="Indian">Indian</option>
+                  <option value="Thai">Thai</option>
+                  <option value="Italian">Italian</option>
+                  <option value="Korean">Korean</option>
+                  <option value="Middle Eastern">Middle Eastern</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="label" for="timeSelect">Max time</label>
+                <select id="timeSelect" class="field">
+                  <option value="999">Any time</option>
+                  <option value="15">15 minutes</option>
+                  <option value="25">25 minutes</option>
+                  <option value="40">40 minutes</option>
+                  <option value="60">60 minutes</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="label" for="difficultySelect">Difficulty</label>
+                <select id="difficultySelect" class="field">
+                  <option value="any">Any difficulty</option>
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="label" for="sortSelect">Sort</label>
+                <select id="sortSelect" class="field">
+                  <option value="recommended">Recommended</option>
+                  <option value="time">Fastest first</option>
+                  <option value="protein">Highest protein</option>
+                  <option value="calories">Lowest calories</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <section>
+          <div class="recipe-toolbar">
+            <p class="recipe-count" id="resultCount">0 recipes found</p>
+            <div class="actions">
+              <button id="randomBtn" class="btn warn">Random from Results</button>
+              <button id="mealPlanBtn" class="btn secondary">Build 3-Meal Plan</button>
+            </div>
+          </div>
+          <div id="activeFilterTags" class="tag-row" style="margin-bottom:1rem"></div>
+          <div id="recipeGrid" class="recipe-grid"></div>
+          <div id="emptyState" class="empty hidden">
+            No recipes match those filters. Remove one allergy/avoid filter, increase time, or use the custom box for more specific filtering.
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="saved" class="section">
+      <div class="section-title">
+        <h2>Saved Recipes</h2>
+        <p>Recipes you save during this session appear here.</p>
+      </div>
+      <div class="actions" style="margin-bottom:1rem">
+        <button id="clearSavedBtn" class="btn danger">Clear Saved</button>
+      </div>
+      <div id="savedGrid" class="saved-grid"></div>
+      <div id="savedEmpty" class="empty">No saved recipes yet. Open a recipe and press Save.</div>
+    </section>
+
+    <section id="tools" class="section">
+      <div class="section-title">
+        <h2>Meal Tools</h2>
+        <p>Small interactive tools for planning meals.</p>
+      </div>
+
+      <div class="grid two">
+        <div class="card tool-card">
+          <h3>Quick calorie estimate</h3>
+          <p class="small">Enter ingredients or portions to get a simple estimated total. This is approximate.</p>
+          <div class="form-grid" style="margin-top:1rem">
+            <input id="calorieName" class="field" type="text" placeholder="Food name, ex: rice bowl">
+            <input id="calorieAmount" class="field" type="number" min="1" placeholder="Number of portions">
+            <select id="calorieType" class="field">
+              <option value="350">Light meal / 350 cal</option>
+              <option value="550">Regular meal / 550 cal</option>
+              <option value="750">Large meal / 750 cal</option>
+              <option value="180">Snack / 180 cal</option>
+            </select>
+            <button id="calcCaloriesBtn" class="btn">Calculate</button>
+          </div>
+          <div id="calorieResult" class="macro-result hidden"></div>
+        </div>
+
+        <div class="card tool-card">
+          <h3>Food profile form</h3>
+          <p class="small">Submit a food preference profile and the site will summarize it dynamically.</p>
+          <form id="profileForm" class="form-grid" style="margin-top:1rem">
+            <input id="profileName" class="field" type="text" placeholder="Name">
+            <select id="profileGoal" class="field">
+              <option value="quick meals">Quick meals</option>
+              <option value="high protein meals">High protein meals</option>
+              <option value="low cost meals">Low cost meals</option>
+              <option value="family meals">Family meals</option>
+            </select>
+            <input id="profileAvoid" class="field" type="text" placeholder="Avoids, ex: milk, peanut">
+            <button class="btn" type="submit">Create Profile</button>
+          </form>
+          <div id="profileResult" class="profile-result hidden"></div>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <h2>Generated 3-meal plan</h2>
+        <p>Uses your current filters from the finder.</p>
+      </div>
+      <div id="mealPlanGrid" class="plan-grid"></div>
+      <div id="mealPlanEmpty" class="empty">Press "Build 3-Meal Plan" in the Recipe Finder.</div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="section-title">
+        <h2>About SafePlate</h2>
+        <p>Clear purpose, audience, and safety limits.</p>
+      </div>
+      <div class="grid three">
+        <div class="card panel">
+          <h3>Clear purpose</h3>
+          <p class="small">SafePlate helps users filter meal ideas by allergies, ingredients, cuisine, food type, and cooking effort.</p>
+        </div>
+        <div class="card panel">
+          <h3>Defined audience</h3>
+          <p class="small">Designed for home cooks, students, families, and people who need organized meal ideas around allergy restrictions.</p>
+        </div>
+        <div class="card panel">
+          <h3>Responsible use</h3>
+          <p class="small">The app avoids recipes based on listed ingredient data, but it cannot verify packaged labels or cross-contact.</p>
+        </div>
+      </div>
+      <div class="section-title">
+        <h2>Meaningful commit history</h2>
+      </div>
+      <div class="saved-grid">
+        <div class="mini-card card"><h3>Commit 1</h3><p>Create SafePlate layout with HTML, CSS, and JavaScript structure.</p></div>
+        <div class="mini-card card"><h3>Commit 2</h3><p>Add recipe database with images, ingredients, allergens, steps, and nutrition tags.</p></div>
+        <div class="mini-card card"><h3>Commit 3</h3><p>Add allergy, diet, cuisine, meal type, time, difficulty, and custom avoid filters.</p></div>
+        <div class="mini-card card"><h3>Commit 4</h3><p>Add recipe detail modal, saved recipes, random meal button, and meal planner.</p></div>
+        <div class="mini-card card"><h3>Commit 5</h3><p>Add theme toggle, gallery slider, interactive forms, and responsive design polish.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="recipeModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-hero">
+        <img id="modalImg" src="" alt="Recipe image">
+        <div class="modal-content">
+          <div class="close-row">
+            <span id="modalSafeTag" class="badge">Recipe</span>
+            <button id="closeModalBtn" class="btn secondary small-btn">Close</button>
+          </div>
+          <h2 id="modalTitle">Recipe title</h2>
+          <p id="modalDesc" class="small"></p>
+          <div id="modalMeta" class="tag-row" style="margin:1rem 0"></div>
+          <div class="actions">
+            <button id="saveRecipeBtn" class="btn">Save Recipe</button>
+            <button id="printRecipeBtn" class="btn secondary">Print</button>
+          </div>
+          <div class="detail-cols">
+            <div class="detail-box">
+              <h3>Ingredients</h3>
+              <ul id="modalIngredients"></ul>
+            </div>
+            <div class="detail-box">
+              <h3>Steps</h3>
+              <ol id="modalSteps"></ol>
+            </div>
+          </div>
+          <div class="detail-box" style="margin-top:1rem">
+            <h3>Allergy and substitution notes</h3>
+            <p id="modalNotes" class="small"></p>
+            <div id="modalAllergens" class="tag-row" style="margin-top:.8rem"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <p class="strong">SafePlate Recipe Finder</p>
+      <p class="small">A live allergy-aware recipe filtering website built with HTML, CSS, and JavaScript.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
