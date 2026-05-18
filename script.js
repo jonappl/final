@@ -13,63 +13,33 @@ window.addEventListener("DOMContentLoaded", () => {
   const allergyOptions = [
     
     { id: "milk", label: "Milk / dairy" },
-
-    
     { id: "egg", label: "Egg" },
-
-    
     { id: "fish", label: "Fish" },
-
-    
     { id: "shellfish", label: "Shellfish" },
-
-    
     { id: "tree-nuts", label: "Tree nuts" },
-
-   
     { id: "peanut", label: "Peanut" },
-
-    
     { id: "wheat", label: "Wheat" },
-
-  
     { id: "soy", label: "Soy" },
-
-    
     { id: "sesame", label: "Sesame" },
-
-   
     { id: "gluten", label: "Gluten" },
-
-  
     { id: "corn", label: "Corn" },
-
-  
     { id: "legumes", label: "Legumes" },
-
-  
     { id: "nightshade", label: "Nightshades" },
-
-
     { id: "sulfites", label: "Sulfites" },
-
-  
     { id: "red-meat", label: "Red meat" },
-
-  
     { id: "pork", label: "Pork" }
   ];
 
-  // Main recipe database.
+  // Main recipes.
   // contains all information needed for rendering and filtering recipes.
   const recipes = [
 
     // Recipe #1.
     {
-      // Unique recipe ID
+      // recipe ID
       id: 1,
 
-      // display name
+      // name
       name: "Rainbow Quinoa Power Bowl",
 
       // category
